@@ -1,0 +1,13 @@
+{
+  "name": "js-audio",
+  "version": "2020.5.25",
+  "description": "Audio library for gapless playing",
+  "main": "audio.js",
+  "scripts": {},
+  "author": {
+    "name": "Loran A. Rendel",
+    "email": "loran@xpor.org",
+    "url": "https://xpor.org"
+  },
+  "license": "ISC"
+}
