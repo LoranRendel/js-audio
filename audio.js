@@ -30,8 +30,8 @@ class audio {
         const list = [];
         for (const [id, url] of Object.entries(data)) list.push(audio.load(id, `${basedir ?? '.'}/${url}`));
         Promise.allSettled ??= promises => Promise.all(promises.map(p => p
-            .then(value => ({status: 'fulfilled', value,}))
-            .catch(reason => ({status: 'rejected', reason,})))
+            .then(value => ({status: 'fulfilled', value}))
+            .catch(reason => ({status: 'rejected', reason})))
         );
         return Promise.allSettled(list);
     }
