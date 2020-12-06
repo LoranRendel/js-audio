@@ -1,6 +1,6 @@
 {
   "name": "js-audio",
-  "version": "2020.12.04",
+  "version": "2020.12.06",
   "description": "Audio library for gapless playing",
   "main": "audio.js",
   "scripts": {},
