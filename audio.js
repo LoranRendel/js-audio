@@ -2,6 +2,12 @@ class audio {
     static _data = {};
     static _context = new (window.AudioContext ?? window.webkitAudioContext)();
     static _playingSingles = {};
+
+    /**
+     * @param {string} id
+     * @param {number} volume
+     * @returns {AudioBufferSourceNode|void}
+     */
     static _getSource = (id, volume = 1) => {
         if (!audio._data[id]) {
             console.warn(`No audio file loaded with ID “${id}”`);
@@ -15,6 +21,11 @@ class audio {
         source.gain = gainNode.gain; // to have possibility to change the volume
         return source;
     }
+
+    /**
+     * @param {string} id
+     * @param {string} url
+     */
     static load = async (id, url) => new Promise(resolve => {
         const request = new XMLHttpRequest();
         request.open('GET', url, true);
@@ -49,9 +60,15 @@ class audio {
         source.onended = () => resolve(true);
         source.start(0);
     })
+
+    /**
+     * @param {string} id
+     * @param {number} volume
+     */
     static loop = (id, volume = 1) => {
         const source = audio._getSource(id, volume);
         source.loop = true;
         source.start(0);
+        return source;
     }
 }
