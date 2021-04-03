@@ -4,8 +4,10 @@ class audio {
     static _playingSingles = {};
 
     /**
-     * @param {string} id
-     * @param {number} volume
+     * Get buffer source of a loaded file
+     *
+     * @param {string} id Audio file ID
+     * @param {number} volume Volume coefficient
      * @returns {AudioBufferSourceNode|void}
      */
     static _getSource = (id, volume = 1) => {
@@ -18,7 +20,7 @@ class audio {
         gainNode.connect(audio._context.destination);
         source.connect(gainNode);
         source.buffer = audio._data[id];
-        source.gain = gainNode.gain; // to have possibility to change the volume
+        source.setVolume = volume => gainNode.gain.value = volume;
         return source;
     }
 
@@ -62,11 +64,16 @@ class audio {
     })
 
     /**
-     * @param {string} id
-     * @param {number} volume
+     * Loop sound
+     *
+     * @param {string} id Audio file ID
+     * @param {number} volume Volume coefficient
+     * @returns {AudioBufferSourceNode|void}
      */
     static loop = (id, volume = 1) => {
         const source = audio._getSource(id, volume);
+        if (!source) return;
+
         source.loop = true;
         source.start(0);
         return source;
