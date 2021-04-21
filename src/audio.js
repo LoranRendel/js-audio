@@ -1,3 +1,6 @@
+import "core-js/stable";
+import "regenerator-runtime/runtime";
+
 export default class audio {
     static _data = {};
     static _context = new (window.AudioContext ?? window.webkitAudioContext)();
@@ -28,7 +31,7 @@ export default class audio {
      * @param {string} id
      * @param {string} url
      */
-    static load = async (id, url) => new Promise(resolve => {
+    static load = (id, url) => new Promise(resolve => {
         const request = new XMLHttpRequest();
         request.open('GET', url, true);
         request.responseType = 'arraybuffer';

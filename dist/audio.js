@@ -5,6 +5,10 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 
+require("core-js/stable");
+
+require("regenerator-runtime/runtime");
+
 var _window$AudioContext;
 
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
@@ -18,10 +22,6 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 function _iterableToArrayLimit(arr, i) { var _i = arr && (typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]); if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -62,39 +62,22 @@ _defineProperty(audio, "_getSource", function (id) {
   return source;
 });
 
-_defineProperty(audio, "load", /*#__PURE__*/function () {
-  var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(id, url) {
-    return regeneratorRuntime.wrap(function _callee$(_context) {
-      while (1) {
-        switch (_context.prev = _context.next) {
-          case 0:
-            return _context.abrupt("return", new Promise(function (resolve) {
-              var request = new XMLHttpRequest();
-              request.open('GET', url, true);
-              request.responseType = 'arraybuffer';
+_defineProperty(audio, "load", function (id, url) {
+  return new Promise(function (resolve) {
+    var request = new XMLHttpRequest();
+    request.open('GET', url, true);
+    request.responseType = 'arraybuffer';
 
-              request.onload = function () {
-                return audio._context.decodeAudioData(request.response, function (buffer) {
-                  audio._data[id] = buffer;
-                  resolve();
-                });
-              };
+    request.onload = function () {
+      return audio._context.decodeAudioData(request.response, function (buffer) {
+        audio._data[id] = buffer;
+        resolve();
+      });
+    };
 
-              request.send();
-            }));
-
-          case 1:
-          case "end":
-            return _context.stop();
-        }
-      }
-    }, _callee);
-  }));
-
-  return function (_x, _x2) {
-    return _ref.apply(this, arguments);
-  };
-}());
+    request.send();
+  });
+});
 
 _defineProperty(audio, "loadList", function (data, basedir) {
   var _Promise$allSettled;
