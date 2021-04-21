@@ -1,4 +1,4 @@
-class audio {
+export default class audio {
     static _data = {};
     static _context = new (window.AudioContext ?? window.webkitAudioContext)();
     static _playingSingles = {};
